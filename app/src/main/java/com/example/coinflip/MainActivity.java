@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(dobhatE){
+                    dobhatE = false;
                     dobasAnimacio(true);
                 }
             }
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(dobhatE){
+                    dobhatE = false;
                     dobasAnimacio(false);
                 }
             }
@@ -52,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void dobasAnimacio(boolean fejTipp){
         if (animacioIndex < 20){
-            animacioIndex++;
-            dobhatE = false;
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     else{
                         imgView1.setImageResource(R.drawable.tails);
                     }
+                    animacioIndex++;
                     dobasAnimacio(fejTipp);
                 }
             }, 50);
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             textView3.setText("Vereség: " + vereseg);
         }
 
-        if (dobasok == 5){
+        if (gyozelem >= 3 || vereseg >= 3){
             jatekVege();
         }
         else{
