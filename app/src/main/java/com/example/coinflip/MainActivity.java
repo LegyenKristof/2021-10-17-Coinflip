@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void dobas(boolean fejTipp){
         dobasok++;
-        boolean fej = rnd.nextBoolean();
         textView1.setText("Dobások: " + dobasok);
+        boolean fej = rnd.nextBoolean();
         dobasEredmeny(fej);
 
         if (fej == fejTipp){
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                init();
+                ujJatek();
             }
         });
         builder.setNegativeButton("Nem", new DialogInterface.OnClickListener() {
@@ -105,6 +105,16 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    private void ujJatek(){
+        dobasok = 0;
+        gyozelem = 0;
+        vereseg = 0;
+        textView1.setText("Dobások: 0");
+        textView2.setText("Győzelem: 0");
+        textView3.setText("Vereség: 0");
+        imgView1.setImageResource(R.drawable.heads);
+    }
+
     private void init(){
         imgView1 = findViewById(R.id.imgView1);
         btn1 = findViewById(R.id.btn1);
@@ -113,12 +123,5 @@ public class MainActivity extends AppCompatActivity {
         textView2 = findViewById(R.id.textView2);
         textView3 = findViewById(R.id.textView3);
         rnd = new Random();
-        dobasok = 0;
-        gyozelem = 0;
-        vereseg = 0;
-        textView1.setText("Dobások: 0");
-        textView2.setText("Győzelem: 0");
-        textView3.setText("Vereség: 0");
-        imgView1.setImageResource(R.drawable.heads);
     }
 }
