@@ -7,6 +7,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,11 +18,12 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView imgView1;
-    Button btn1, btn2;
-    TextView textView1, textView2, textView3;
-    Random rnd;
-    int dobasok, gyozelem, vereseg;
+    private ImageView imgView1;
+    private Button btn1, btn2;
+    private TextView textView1, textView2, textView3;
+    private Random rnd;
+    private int dobasok, gyozelem, vereseg, animacioIndex;
+    private boolean dobhatE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,43 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dobas(true);
+                if(dobhatE){
+                    dobasAnimacio(true);
+                }
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dobas(false);
+                if(dobhatE){
+                    dobasAnimacio(false);
+                }
             }
         });
+    }
+
+    private void dobasAnimacio(boolean fejTipp){
+        if (animacioIndex < 20){
+            animacioIndex++;
+            dobhatE = false;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (animacioIndex % 2 == 0){
+                        imgView1.setImageResource(R.drawable.heads);
+                    }
+                    else{
+                        imgView1.setImageResource(R.drawable.tails);
+                    }
+                    dobasAnimacio(fejTipp);
+                }
+            }, 50);
+        }
+        else{
+            animacioIndex = 0;
+            dobas(fejTipp);
+        }
     }
 
     private void dobas(boolean fejTipp){
@@ -61,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (dobasok == 5){
             jatekVege();
+        }
+        else{
+            dobhatE = true;
         }
     }
 
@@ -113,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         textView2.setText("Győzelem: 0");
         textView3.setText("Vereség: 0");
         imgView1.setImageResource(R.drawable.heads);
+        dobhatE = true;
     }
 
     private void init(){
@@ -123,5 +156,7 @@ public class MainActivity extends AppCompatActivity {
         textView2 = findViewById(R.id.textView2);
         textView3 = findViewById(R.id.textView3);
         rnd = new Random();
+        dobhatE = true;
+        animacioIndex = 0;
     }
 }
