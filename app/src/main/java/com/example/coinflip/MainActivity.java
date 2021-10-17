@@ -1,8 +1,11 @@
 package com.example.coinflip;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, dobasEredmeny, duration).show();
                     textView3.setText("Vereség: " + vereseg);
                 }
+
+                if (dobasok == 5){
+                    jatekVege();
+                }
             }
         });
 
@@ -77,8 +84,37 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, dobasEredmeny, duration).show();
                     textView2.setText("Győzelem: " + gyozelem);
                 }
+
+                if (dobasok == 5){
+                    jatekVege();
+                }
             }
         });
+    }
+
+    private void jatekVege(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (gyozelem > vereseg){
+            builder.setTitle("Győzelem");
+        }
+        else{
+            builder.setTitle("Vereség");
+        }
+        builder.setMessage("Szeretne új játékot játszani?");
+        builder.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                init();
+            }
+        });
+        builder.setNegativeButton("Nem", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                System.exit(1);
+            }
+        });
+        builder.setCancelable(false);
+        builder.create().show();
     }
 
     private void init(){
@@ -92,5 +128,9 @@ public class MainActivity extends AppCompatActivity {
         dobasok = 0;
         gyozelem = 0;
         vereseg = 0;
+        textView1.setText("Dobások: 0");
+        textView2.setText("Győzelem: 0");
+        textView3.setText("Vereség: 0");
+        imgView1.setImageResource(R.drawable.heads);
     }
 }
