@@ -32,64 +32,52 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dobasok++;
-                boolean fej = rnd.nextBoolean();
-                Context context = getApplicationContext();
-                String dobasEredmeny = "";
-                int duration = Toast.LENGTH_SHORT;
-                textView1.setText("Dobások: " + dobasok);
-
-                if (fej){
-                    gyozelem++;
-                    imgView1.setImageResource(R.drawable.heads);
-                    dobasEredmeny = "FEJ";
-                    Toast.makeText(context, dobasEredmeny, duration).show();
-                    textView2.setText("Győzelem: " + gyozelem);
-                }
-                else{
-                    vereseg++;
-                    imgView1.setImageResource(R.drawable.tails);
-                    dobasEredmeny = "ÍRÁS";
-                    Toast.makeText(context, dobasEredmeny, duration).show();
-                    textView3.setText("Vereség: " + vereseg);
-                }
-
-                if (dobasok == 5){
-                    jatekVege();
-                }
+                dobas(true);
             }
         });
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dobasok++;
-                boolean fej = rnd.nextBoolean();
-                Context context = getApplicationContext();
-                String dobasEredmeny = "";
-                int duration = Toast.LENGTH_SHORT;
-                textView1.setText("Dobások: " + dobasok);
-
-                if (fej){
-                    vereseg++;
-                    imgView1.setImageResource(R.drawable.heads);
-                    dobasEredmeny = "FEJ";
-                    Toast.makeText(context, dobasEredmeny, duration).show();
-                    textView3.setText("Vereség: " + vereseg);
-                }
-                else{
-                    gyozelem++;
-                    imgView1.setImageResource(R.drawable.tails);
-                    dobasEredmeny = "ÍRÁS";
-                    Toast.makeText(context, dobasEredmeny, duration).show();
-                    textView2.setText("Győzelem: " + gyozelem);
-                }
-
-                if (dobasok == 5){
-                    jatekVege();
-                }
+                dobas(false);
             }
         });
+    }
+
+    private void dobas(boolean fejTipp){
+        dobasok++;
+        boolean fej = rnd.nextBoolean();
+        textView1.setText("Dobások: " + dobasok);
+        dobasEredmeny(fej);
+
+        if (fej == fejTipp){
+            gyozelem++;
+            textView2.setText("Győzelem: " + gyozelem);
+        }
+        else{
+            vereseg++;
+            textView3.setText("Vereség: " + vereseg);
+        }
+
+        if (dobasok == 5){
+            jatekVege();
+        }
+    }
+
+    private void dobasEredmeny(boolean fej){
+        Context context = getApplicationContext();
+        String dobasEredmeny;
+        int duration = Toast.LENGTH_SHORT;
+
+        if (fej){
+            dobasEredmeny = "FEJ";
+            imgView1.setImageResource(R.drawable.heads);
+        }
+        else{
+            dobasEredmeny = "ÍRÁS";
+            imgView1.setImageResource(R.drawable.tails);
+        }
+        Toast.makeText(context, dobasEredmeny, duration).show();
     }
 
     private void jatekVege(){
